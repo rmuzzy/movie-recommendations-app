@@ -234,10 +234,11 @@ def myIBCF(newuser, S, movie_columns, popular_movies_saved):
     for i in movie_columns:
         if pd.notna(newuser[i]):
             continue
-
-        try:
+        
+        if i in S.index:
             neighbors = S.loc[i].dropna()
-        except KeyError:
+        else:
+            predictions[i] = np.nan
             continue
 
         rated_neighbors = neighbors.index.intersection(newuser.dropna().index)
