@@ -11,10 +11,17 @@ movies = pd.read_csv(
 movies.columns = ["MovieID", "Title", "Genres"]
 movies["MovieID"] = movies["MovieID"].astype(str)
 sample_movies = movies.head(100)
-R = pd.read_csv("https://github.com/rmuzzy/recommendations-app-files/raw/refs/heads/main/Rmat.csv", index_col=0)
-S = pd.read_csv("https://github.com/rmuzzy/recommendations-app-files/raw/refs/heads/main/similarity_matrix_top30.csv", index_col=0)
-
 popular_movies_saved = pd.read_csv("./popular_movies.csv")
+
+S = None
+
+def get_S():
+    global S
+    if S is None:
+        print("[INFO] Loading S matrix...")
+        S = pd.read_csv("https://github.com/rmuzzy/recommendations-app-files/raw/refs/heads/main/similarity_matrix_top30.csv", index_col=0)
+        print("[INFO] S matrix loaded.")
+    return S
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.SKETCHY])
 server = app.server 
@@ -167,13 +174,15 @@ def update_star_colors(*args):
 )
 def get_recommendations(n_clicks, ratings_store):
     if n_clicks > 0:
+        movie_columns = [f"m{movie_id}" for movie_id in movies["MovieID"]]
+        S = get_S()
         new_user = pd.Series(dtype=float)
         for movie_id, rating in ratings_store.items():
             if rating > 0:
                 new_user[f"m{movie_id}"] = rating
 
-        new_user = new_user.reindex(R.columns, fill_value=np.nan)
-        recommendations = myIBCF(new_user, S, R, popular_movies_saved)
+        new_user = new_user.reindex(movie_columns, fill_value=np.nan)
+        recommendations = myIBCF(new_user, S, movie_columns, popular_movies_saved)
 
         recommendations_html = html.Div(
             [
@@ -218,15 +227,19 @@ def get_recommendations(n_clicks, ratings_store):
     return html.Div("Rate movies and click the button to get recommendations.")
 
 
-def myIBCF(newuser, S, R, popular_movies_saved):
-    newuser = pd.Series(newuser, index=R.columns)
-    predictions = pd.Series(index=R.columns, dtype=float)
+def myIBCF(newuser, S, movie_columns, popular_movies_saved):
+    newuser = pd.Series(newuser, index=movie_columns)
+    predictions = pd.Series(index=movie_columns, dtype=float)
 
-    for i in R.columns:
+    for i in movie_columns:
         if pd.notna(newuser[i]):
             continue
 
-        neighbors = S.loc[i].dropna()
+        try:
+            neighbors = S.loc[i].dropna()
+        except KeyError:
+            continue
+
         rated_neighbors = neighbors.index.intersection(newuser.dropna().index)
 
         if len(rated_neighbors) == 0:
