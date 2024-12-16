@@ -11,8 +11,8 @@ movies = pd.read_csv(
 movies.columns = ["MovieID", "Title", "Genres"]
 movies["MovieID"] = movies["MovieID"].astype(str)
 sample_movies = movies.head(100)
-R = pd.read_csv("https://d3c33hcgiwev3.cloudfront.net/I-w9Wo-HSzmUGNNHw0pCzg_bc290b0e6b3a45c19f62b1b82b1699f1_Rmat.csv?Expires=1734480000&Signature=POU53r-wt9D3qAj9LesIXs7WFzJUJyfoon7QgMqkNgXHE8rfoFoW0BGX0NwfTPp2EOhtv1BG2Ew0YRDHu2T4I5TKI2q8W-1Hn1NlNjCMr8hBWEt-cXn8PUDa-HmjkW-nPvTjDgHL2GPTRkLlMRT7-FuN1Nr2WFHW7I6IekMEsDE_&Key-Pair-Id=APKAJLTNE6QMUY6HBC5A", index_col=0)
-S = pd.read_csv("./similarity_matrix_top30.csv", index_col=0)
+R = pd.read_csv("https://github.com/rmuzzy/recommendations-app-files/raw/refs/heads/main/Rmat.csv", index_col=0)
+S = pd.read_csv("https://github.com/rmuzzy/recommendations-app-files/raw/refs/heads/main/similarity_matrix_top30.csv", index_col=0)
 popular_movies_saved = pd.read_csv("./popular_movies.csv")
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.SKETCHY])
