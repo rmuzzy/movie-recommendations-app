@@ -3,6 +3,7 @@ from dash import html, Input, Output, State, ctx, dcc
 import dash_bootstrap_components as dbc
 import pandas as pd
 import numpy as np
+import os
 
 movies = pd.read_csv(
     "https://liangfgithub.github.io/MovieData/movies.dat?raw=true", sep="::", engine="python", header=None, encoding="ISO-8859-1"
@@ -251,4 +252,4 @@ def myIBCF(newuser, S, R, popular_movies_saved):
 
 
 if __name__ == "__main__":
-    app.run_server(debug=True)
+    app.run_server(debug=False, host="0.0.0.0", port=int(os.environ.get("PORT", 8050)))
