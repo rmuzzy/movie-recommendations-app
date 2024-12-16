@@ -1,0 +1,58 @@
+.header-section {
+    background-color: #6c757d;
+    padding: 20px;
+}
+.movie-rating-container {
+    height: 500px;
+    overflow-y: scroll;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #e9ecef;
+    border-radius: 10px;
+}
+.movie-rating-section {
+    background-color: #f8f9fa;
+}
+.movie-title {
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0 auto;
+}
+.movie-poster {
+    height: 150px;
+    width: auto;
+}
+.button-section {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    background-color: #e3f2fd;
+}
+.recommendations-section {
+    padding: 20px;
+    background-color: #f1f8e9;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+.star-rating {
+    cursor: pointer;
+    font-size: 20px;
+    color: gray;
+    margin: 0 1px;
+}
+.recommendation-card {
+    width: 18rem;
+    margin: 10px;
+}
+
+.recommendation-card-img {
+    height: 300px;
+    object-fit: contain;
+}
+
+.recommendation-card-title {
+    font-size: 1rem;
+    font-weight: bold;
+}
