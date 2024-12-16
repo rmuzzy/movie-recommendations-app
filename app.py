@@ -16,6 +16,7 @@ S = pd.read_csv("https://github.com/rmuzzy/recommendations-app-files/raw/refs/he
 popular_movies_saved = pd.read_csv("./popular_movies.csv")
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.SKETCHY])
+server = app.server 
 
 
 def create_star_rating(movie_id):
