@@ -11,8 +11,8 @@ movies = pd.read_csv(
 movies.columns = ["MovieID", "Title", "Genres"]
 movies["MovieID"] = movies["MovieID"].astype(str)
 sample_movies = movies.head(100)
-R = pd.read_csv("https://github.com/rmuzzy/recommendations-app-files/raw/refs/heads/main/Rmat.csv", dtype=np.float32, index_col=0)
-S = pd.read_csv("https://github.com/rmuzzy/recommendations-app-files/raw/refs/heads/main/similarity_matrix_top30.csv", dtype=np.float32, index_col=0)
+R = pd.read_csv("https://github.com/rmuzzy/recommendations-app-files/raw/refs/heads/main/Rmat.csv", index_col=0)
+S = pd.read_csv("https://github.com/rmuzzy/recommendations-app-files/raw/refs/heads/main/similarity_matrix_top30.csv", index_col=0)
 
 popular_movies_saved = pd.read_csv("./popular_movies.csv")
 
